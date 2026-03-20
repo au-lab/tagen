@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>独立研究ネットワークTAGEN | Pluralistic Research Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+            word-break: break-all;
+        }
+        
+        /* ヒーロー領域の背景スライドショー */
+        .hero-visual {
+            background-color: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-visual .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-visual .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-visual .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+            z-index: 1;
+        }
+        .hero-visual > .max-w-7xl {
+            position: relative;
+            z-index: 2;
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+        
+        /* ブランドカラー */
+        .text-tagen-orange { color: #F58220; }
+        .text-tagen-blue { color: #0068FF; }
+        .bg-tagen-orange { background-color: #F58220; }
+        .bg-tagen-blue { background-color: #0068FF; }
+        
+        /* ポップかつSolidな影とアニメーション */
+        .pop-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pop-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ニュースエリアの透過背景 (グラスモーフィズム・ポップ) */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 統一タイトルスタイル */
+        .section-title-group {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.75rem;
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 900;
+            color: #1e293b; /* slate-800 */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: #F58220;
+            border-radius: 999px;
+        }
+        .section-subtitle {
+            margin-top: 1rem;
+            color: #94a3b8; /* slate-400 */
+            font-weight: 700;
+            font-size: 0.75rem; /* text-xs */
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 leading-relaxed">
+
+<!-- ============================================================
+  ★ サイト設定・コンテンツ管理エリア
+     ここを書き換えるだけでサイト内容を更新できます
+  ============================================================ -->
+<script>
+const CONFIG = {
+
+  // ===== HERO =====
+  hero: {
+    badge:    'Independent Researchers Network',
+    h1Main:   '独立研究ネットワーク',
+    h1Accent: 'TAGEN',
+    catch1:   'みずから「学びのかたち」を企画する…',
+    catch2:   '境界を超えた先にある、新しい共働の「場」づくりへ',
+    newsTitle: '最新情報',
+    newsReadMoreUrl: 'https://note.com/irn_tagen/m/mcd3e98200fc3',
+    // ▼ 背景画像URL（増やすには配列に追加するだけ）
+    images: [
+      'https://assets.st-note.com/production/uploads/images/236726677/a2b31c2bac0881281e1c2465cea53509.jpeg',
+      'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
+    ],
+    slideshowInterval: 6000, // 切り替え間隔（ミリ秒）
+  },
+
+  // ===== TAGENとは =====
+  about: {
+    sectionTitle:    'TAGENとは',
+    sectionSubtitle: '多元の知を探究する学びの企画集団',
+    purposeHead: '目的',
+    purposeLead: '独立研究ネットワークTAGENは、所属、経歴、年齢、国籍、研究領域を越え、誰もが知的探求を実践できる「場」を拓くことを目指す集まりです。',
+    purposeBody: '組織に属しているか否かにかかわらず、すべての「精神的に自立した探求者」が既存の境界を越えて出会い、みずから「学びのかたち」を企画する、能動的なプロセスを育むことを通して、豊かな研究文化の環境づくりに貢献することを目的としています。',
+    btn1Text: '「TAGEN」のコンセプト',
+    btn1Url:  'https://note.com/irn_tagen/n/n0123c8a712fa',
+    btn2Text: 'Official Note',
+    btn2Url:  'https://note.com/irn_tagen',
+    activitiesHead: '活動内容',
+    // ▼ 活動内容（増減可。color は "blue" または "orange"）
+    activities: [
+      { title: '知の交流と企画支援',        desc: '研究プロジェクト、勉強会、講演会、ワークショップの企画・運営',             color: 'blue'   },
+      { title: '在野の知の発掘と架橋',      desc: '既存の領域外で「知」を模索するプレイヤーとのネットワークづくり',         color: 'orange' },
+      { title: '動的な発信プラットフォーム', desc: '研究経過を発信し、成果を記録するためのメディア運営',                   color: 'blue'   },
+      { title: '自由のためのガイドライン',   desc: '研究活動における倫理的課題の解決に誠実に向き合うための指針づくり',       color: 'orange' },
+    ],
+  },
+
+  // ===== プロジェクト（増減可） =====
+  projects: {
+    sectionTitle:    'TAGENのプロジェクト',
+    sectionSubtitle: 'みんなの「学びたい」を実現する場',
+    // ▼ プロジェクトを追加するには、このオブジェクトを配列に追加する
+    items: [
+      {
+        name:   '日韓酒文化研究会',
+        desc:   '酒を媒介とした日韓の文化交流を探究します。',
+        url:    'https://note.com/sakezemi',
+        img:    'https://assets.st-note.com/production/uploads/images/128432220/96e251bc4237f2a86987472e533649a5.jpeg',
+        accent: 'orange', // "orange" または "blue"
+      },
+      {
+        name:   'マージナルメディアの会',
+        desc:   '境界領域にあるメディア事象を抽出し検討します。',
+        url:    'https://note.com/mm_labo',
+        img:    'https://assets.st-note.com/production/uploads/images/244718926/09941bd4a09f601613d120dd4e42cb7e.jpg',
+        accent: 'blue',
+      },
+      {
+        name:   'RuRoゼミナール',
+        desc:   '現代の知のあり方を再編するゼミナールです。',
+        url:    'https://note.com/ruro_semi',
+        img:    'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
+        accent: 'orange',
+      },
+    ],
+  },
+
+  // ===== 世話人 =====
+  members: {
+    sectionTitle:    'TAGENの世話人',
+    sectionSubtitle: '学びの企画をなかだちするメディエイター',
+    rssUrl: 'https://note.com/irn_tagen/m/m547633fbc335/rss',
+  },
+
+  // ===== 最新情報 RSS =====
+  news: {
+    rssUrl: 'https://note.com/irn_tagen/m/mcd3e98200fc3/rss',
+  },
+
+  // ===== フッター =====
+  footer: {
+    orgName:    '独立研究ネットワークTAGEN',
+    orgNameEng: 'Independent Researchers Network',
+    noteUrl:    'https://note.com/irn_tagen',
+    email:      'info@tagen.media',
+    copyright:  '2026 Independent Researchers Network TAGEN.',
+  },
+};
+</script>
+<!-- ============================================================
+  設定エリア ここまで
+  ============================================================ -->
+
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#e9edeb] border-b border-[#d4d9d6]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24 items-center">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="flex items-center gap-3">
+                        <img src="./tagen_icon.webp" alt="TAGEN icon" class="h-16 md:h-[4.5rem] w-auto object-contain">
+                        <img src="./title.jpg" alt="TAGEN" class="h-10 md:h-11 w-auto object-contain">
+                    </div>
+                </div>
+                                <div class="hidden md:flex space-x-8 text-xs font-black uppercase tracking-widest text-slate-400">
+                    <a href="#hero-news-area" class="hover:text-tagen-blue transition-colors">最新情報</a>
+                    <a href="#about" class="hover:text-tagen-blue transition-colors">TAGENとは</a>
+                    <a href="#groups" class="hover:text-tagen-blue transition-colors">プロジェクト</a>
+                    <a href="#notes" class="hover:text-tagen-blue transition-colors">世話人</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-[75vh] flex items-center hero-visual relative pt-24 overflow-hidden text-white">
+        <!-- 背景スライド（CONFIG.hero.images で管理） -->
+        <div id="hero-slides"><!-- JS render --></div>
+        <div class="hero-overlay"></div>
+        <div class="max-w-7xl mx-auto px-4 w-full grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center">
+            
+            <!-- Left Side -->
+            <div class="lg:col-span-2 text-white text-left">
+                <div class="inline-block px-4 py-1.5 bg-tagen-orange/90 rounded-full text-[20px] font-black tracking-[0.2em] mb-6 uppercase shadow-lg" id="cfg-hero-badge">Independent Researchers Network</div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 leading-[1.1] drop-shadow-2xl">
+                    <span id="cfg-hero-h1-main">独立研究ネットワーク</span><br><span class="text-tagen-orange" id="cfg-hero-h1-accent">TAGEN</span>
+                </h1>
+                <p class="text-base md:text-xl lg:text-2xl font-bold leading-relaxed drop-shadow-md opacity-95 max-w-2xl text-white">
+                    <span id="cfg-hero-catch1">みずから「学びのかたち」を企画する…</span><br>
+                    <span class="mt-2 block text-white/90" id="cfg-hero-catch2">境界を超えた先にある、新しい共働の「場」づくりへ</span>
+                </p>
+            </div>
+
+            <!-- Right Side: News -->
+            <div id="hero-news-area" class="lg:col-span-1 glass-panel p-4 md:p-5 rounded-2xl shadow-2xl relative overflow-hidden text-white">
+                <div class="flex items-center justify-between mb-4 border-b border-white/20 pb-3 text-white">
+                    <h2 class="text-white text-xl font-black tracking-wider text-white" id="cfg-news-title">最新情報</h2>
+                    <span class="text-[9px] text-white/50 font-black uppercase tracking-widest">Latest Updates</span>
+                </div>
+                <div id="rss-feed-2" class="space-y-1 text-white">
+                    <div class="animate-pulse flex gap-3 items-center p-1.5 text-white">
+                        <div class="w-28 h-[4.5rem] bg-white/20 rounded-lg text-white flex-shrink-0"></div>
+                        <div class="flex-grow space-y-3 text-white">
+                            <div class="h-2 bg-white/10 w-1/4 rounded-full text-white"></div>
+                            <div class="h-4 bg-white/10 w-full rounded-full text-white"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/20">
+                    <a href="https://note.com/irn_tagen/m/mcd3e98200fc3" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 bg-white/10 hover:bg-white/20 border border-white/30 hover:border-white/50 rounded-lg transition-all text-[11px] font-black tracking-[0.2em] uppercase text-white group">
+                        Read More
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section: TAGENとは -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-title-group">
+                <h2 class="section-title" id="cfg-about-title">TAGENとは</h2>
+                <p class="section-subtitle" id="cfg-about-sub">多元の知を探究する学びの企画集団</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
+                <!-- Left: Purpose -->
+                <div>
+                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block" id="cfg-purpose-head">目的</h3>
+                    <div class="space-y-8 text-slate-600 leading-relaxed font-medium">
+                        <p class="text-xl md:text-2xl text-slate-900 font-bold border-l-8 border-tagen-orange pl-8 py-2 tracking-tight">
+                            <span id="cfg-purpose-lead">独立研究ネットワークTAGENは、所属、経歴、年齢、国籍、研究領域を越え、誰もが知的探求を実践できる「場」を拓くことを目指す集まりです。</span>
+                        </p>
+                        <p class="text-sm md:text-base text-justify opacity-80">
+                            <span id="cfg-purpose-body">組織に属しているか否かにかかわらず、すべての「精神的に自立した探求者」が既存の境界を越えて出会い、みずから「学びのかたち」を企画する、能動的なプロセスを育むことを通して、豊かな研究文化の環境づくりに貢献することを目的としています。</span>
+                        </p>
+                    </div>
+                    
+                    <div class="mt-12 flex flex-col gap-4">
+                        <a href="https://note.com/irn_tagen/n/n0123c8a712fa" target="_blank" class="inline-flex items-center justify-between px-8 py-4 bg-white border-2 border-tagen-blue text-tagen-blue rounded-xl hover:bg-tagen-blue hover:text-white hover:-translate-y-0.5 transition-all font-black text-sm tracking-widest group shadow-md">
+                            「TAGEN」のコンセプト
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </a>
+                        <a href="https://note.com/irn_tagen" target="_blank" class="inline-flex items-center justify-between px-8 py-4 bg-white border-2 border-tagen-blue text-tagen-blue rounded-xl hover:bg-tagen-blue hover:text-white hover:-translate-y-0.5 transition-all font-black text-sm tracking-widest group shadow-md">
+                            Official Note
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Activities -->
+                <div>
+                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block text-slate-900" id="cfg-activities-head">活動内容</h3>
+                    <div class="grid gap-4" id="cfg-activities-grid"><!-- JS render --></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="groups" class="py-24 bg-slate-50 border-t border-slate-100 text-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="section-title-group text-slate-800">
+                <h2 class="section-title text-slate-800" id="cfg-proj-title">TAGENのプロジェクト</h2>
+                <p class="section-subtitle" id="cfg-proj-sub">みんなの「学びたい」を実現する場</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-10 text-slate-800" id="cfg-projects-grid"><!-- JS render --></div>
+        </div>
+    </section>
+
+    <!-- 世話人 Section -->
+    <section id="notes" class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="section-title-group">
+                <h2 class="section-title" id="cfg-mem-title">TAGENの世話人</h2>
+                <p class="section-subtitle" id="cfg-mem-sub">学びの企画をなかだちするメディエイター</p>
+            </div>
+            <div id="rss-feed-1" class="flex flex-wrap justify-center gap-6 md:gap-8">
+                <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-[2rem] shadow-sm"></div>
+                <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-[2rem] shadow-sm"></div>
+                <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-[2rem] shadow-sm"></div>
+                <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-[2rem] shadow-sm"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 bg-slate-950 text-slate-500 text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16 text-center md:text-left text-white text-white">
+                <div class="flex items-center justify-center md:justify-start gap-4 mb-12 md:mb-0">
+                    <div class="h-14 w-14 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="./tagen_icon.webp" alt="TAGEN icon" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-left">
+                        <span class="font-black text-white text-xl block mb-0.5 tracking-tight" id="cfg-footer-name">独立研究ネットワークTAGEN</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-40 text-white" id="cfg-footer-eng">Independent Researchers Network</span>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center space-x-10 font-black text-xs tracking-[0.3em] uppercase text-white/40">
+                    <a href="https://note.com/irn_tagen" target="_blank" class="hover:text-white transition-colors">note</a>
+                    <a href="mailto:info@tagen.media" class="hover:text-white transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        info@tagen.media
+                    </a>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 text-center md:text-left text-[10px] font-bold tracking-widest opacity-20 uppercase text-white text-white">
+                <span id="cfg-footer-copy">&copy; 2026 Independent Researchers Network TAGEN.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== ユーティリティ =====
+
+        function getTagText(el, tagName) {
+            const node = el.getElementsByTagName(tagName)[0];
+            return node ? (node.textContent || '').trim() : '';
+        }
+
+        function getItemLink(itemEl) {
+            for (const child of itemEl.childNodes) {
+                if (child.nodeName === 'link') return (child.textContent || '').trim();
+            }
+            return getTagText(itemEl, 'link');
+        }
+
+        function getThumb(itemEl) {
+            // DOMParserは名前空間付きタグを正しく扱えないため、
+            // outerXML（文字列）に対して正規表現で直接抽出する
+
+            // itemElをXML文字列に変換
+            const rawXml = new XMLSerializer().serializeToString(itemEl);
+
+            // 1. <media:thumbnail>URL</media:thumbnail> （テキストコンテンツ）
+            const m1 = rawXml.match(/<(?:[^:]+:)?thumbnail[^>]*>([^<]+)<\/(?:[^:]+:)?thumbnail>/i);
+            if (m1 && m1[1].trim() && !m1[1].includes('common/ogp')) return m1[1].trim();
+
+            // 2. <media:content url="URL"> または <media:thumbnail url="URL"> （属性形式）
+            const m2 = rawXml.match(/<(?:[^:]+:)?(?:thumbnail|content)[^>]+url=["']([^"']+)["']/i);
+            if (m2 && !m2[1].includes('common/ogp')) return m2[1];
+
+            // 3. enclosure url属性
+            const m3 = rawXml.match(/<enclosure[^>]+url=["']([^"']+)["']/i);
+            if (m3 && !m3[1].includes('common/ogp')) return m3[1];
+
+            // 4. description / content内のnote CDN URL
+            const m4 = rawXml.match(/https?:\/\/assets\.st-note\.com\/[^\s"'<>&]+\.(?:jpe?g|png|webp)/i);
+            if (m4 && !m4[0].includes('common/ogp')) return m4[0];
+
+            return null;
+        }
+
+        // ===== RSS取得 =====
+
+        // タイムアウト付きfetch
+        function fetchWithTimeout(url, ms = 10000) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), ms);
+            return fetch(url, { signal: controller.signal })
+                .finally(() => clearTimeout(timer));
+        }
+
+        // allorigins経由でXML取得→パース（最大10回リトライ）
+        async function fetchRSS(rssUrl, onProgress) {
+            const MAX_RETRY = 10;
+            for (let i = 0; i < MAX_RETRY; i++) {
+                if (onProgress) onProgress(i + 1, MAX_RETRY);
+                try {
+                    const res = await fetchWithTimeout(
+                        `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`
+                    );
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const json = await res.json();
+                    const result = parseXML(json.contents);
+                    if (result) return result;
+                    throw new Error('parse failed');
+                } catch(e) {
+                    if (i < MAX_RETRY - 1) {
+                        // 300ms固定間隔でリトライ
+                        await new Promise(r => setTimeout(r, 300));
+                    }
+                }
+            }
+            return null;
+        }
+
+        function parseXML(xmlStr) {
+            if (!xmlStr) return null;
+            try {
+                const xml = new DOMParser().parseFromString(xmlStr, 'text/xml');
+                if (xml.querySelector('parsererror')) return null;
+                const itemEls = Array.from(xml.getElementsByTagName('item'));
+                if (itemEls.length === 0) return null;
+                const items = itemEls.map(el => ({
+                    title:          getTagText(el, 'title'),
+                    link:           getItemLink(el),
+                    pubDate:        getTagText(el, 'pubDate'),
+                    extractedThumb: getThumb(el),
+                }));
+                items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+                return { status: 'ok', items };
+            } catch(e) { return null; }
+        }
+
+        // 画像エラー時に頭文字表示にフォールバック
+        function onThumbError(img, initial) {
+            img.style.display = 'none';
+            const p = img.parentElement;
+            if (p && !p.querySelector('.thumb-fallback')) {
+                const fb = document.createElement('div');
+                fb.className = 'thumb-fallback w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200';
+                fb.innerHTML = `<span class="text-2xl font-black text-slate-400">${initial || '?'}</span>`;
+                p.appendChild(fb);
+            }
+        }
+
+        // 失敗時のエラーUI（ヒーローパネル用・白テキスト）
+        function showRetryHero(containerId, rssUrl, titleId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center gap-3 py-6 text-center">
+                    <p class="text-white/60 text-xs font-bold">一時的に読み込めません</p>
+                    <button onclick="retryHero('${containerId}','${rssUrl}','${titleId}')"
+                        class="px-5 py-2 bg-white/10 hover:bg-white/20 border border-white/30 hover:border-white/50 rounded-lg text-white text-[11px] font-black tracking-widest uppercase transition-all">
+                        リトライ
+                    </button>
+                </div>`;
+        }
+
+        // 失敗時のエラーUI（グリッド用・グレーテキスト）
+        function showRetryGrid(containerId, rssUrl) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="w-full flex flex-col items-center justify-center gap-3 py-10 text-center">
+                    <p class="text-slate-400 text-xs font-bold">一時的に読み込めません</p>
+                    <button onclick="retryGrid('${containerId}','${rssUrl}')"
+                        class="px-5 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-slate-600 text-[11px] font-black tracking-widest uppercase transition-all">
+                        リトライ
+                    </button>
+                </div>`;
+        }
+
+        async function retryHero(containerId, rssUrl, titleId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="animate-pulse flex gap-3 items-center p-1.5 text-white">
+                    <div class="w-28 h-[4.5rem] bg-white/20 rounded-lg flex-shrink-0"></div>
+                    <div class="flex-grow space-y-3">
+                        <div class="h-2 bg-white/10 w-1/4 rounded-full"></div>
+                        <div class="h-4 bg-white/10 w-full rounded-full"></div>
+                    </div>
+                </div>`;
+            await loadNewsListInHero(rssUrl, containerId, titleId);
+        }
+
+        async function retryGrid(containerId, rssUrl) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="w-full flex justify-center gap-6 py-6">
+                    <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-xl"></div>
+                    <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-xl"></div>
+                    <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-xl"></div>
+                </div>`;
+            await loadSawaninGrid(rssUrl, containerId);
+        }
+
+        async function loadSawaninGrid(rssUrl, containerId) {
+            const container = document.getElementById(containerId);
+            // 読み込み中UI
+            container.innerHTML = `
+                <div class="w-full flex flex-col items-center justify-center gap-2 py-10 text-center" id="${containerId}-loading">
+                    <p class="text-slate-400 text-xs font-bold">読み込み中 <span id="${containerId}-count">1</span> / 10</p>
+                    <div class="flex gap-1">${[...Array(10)].map((_,i)=>`<div class="w-1.5 h-1.5 rounded-full bg-slate-200" id="${containerId}-dot-${i}"></div>`).join('')}</div>
+                </div>`;
+            const data = await fetchRSS(rssUrl, (n) => {
+                const countEl = document.getElementById(`${containerId}-count`);
+                if (countEl) countEl.textContent = n;
+                for (let i = 0; i < 10; i++) {
+                    const dot = document.getElementById(`${containerId}-dot-${i}`);
+                    if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${i < n ? 'bg-tagen-blue' : 'bg-slate-200'}`;
+                }
+            });
+            if (data) {
+                const items = data.items.slice(0, 8);
+                container.innerHTML = items.map(item => {
+                    const initial = (item.title || '?').charAt(0);
+                    const thumbHtml = item.extractedThumb
+                        ? `<img src="${item.extractedThumb}" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" onerror="onThumbError(this, '${initial}')">`
+                        : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200"><span class="text-2xl font-black text-slate-400">${initial}</span></div>`;
+                    return `
+                        <a href="${item.link}" target="_blank" class="pop-card group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col h-full w-40 md:w-48 text-center text-slate-800">
+                            <div class="aspect-[4/3] overflow-hidden bg-slate-100 relative">
+                                ${thumbHtml}
+                                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="p-5 flex-grow flex items-center justify-center text-slate-800">
+                                <h5 class="text-[11px] font-black text-slate-800 line-clamp-3 group-hover:text-tagen-blue transition-colors leading-snug tracking-tight">${item.title}</h5>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            } else {
+                showRetryGrid(containerId, rssUrl);
+            }
+        }
+
+        async function loadNewsListInHero(rssUrl, containerId, titleId) {
+            const container = document.getElementById(containerId);
+            const titleElement = document.getElementById(titleId);
+            // 読み込み中UI
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center gap-2 py-4 text-center">
+                    <p class="text-white/60 text-xs font-bold">読み込み中 <span id="${containerId}-count">1</span> / 10</p>
+                    <div class="flex gap-1">${[...Array(10)].map((_,i)=>`<div class="w-1.5 h-1.5 rounded-full bg-white/20" id="${containerId}-dot-${i}"></div>`).join('')}</div>
+                </div>`;
+            const data = await fetchRSS(rssUrl, (n) => {
+                const countEl = document.getElementById(`${containerId}-count`);
+                if (countEl) countEl.textContent = n;
+                for (let i = 0; i < 10; i++) {
+                    const dot = document.getElementById(`${containerId}-dot-${i}`);
+                    if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${i < n ? 'bg-tagen-orange' : 'bg-white/20'}`;
+                }
+            });
+            if (data) {
+                if (titleElement) titleElement.textContent = "最新情報";
+                const items = data.items.slice(0, 4);
+                container.innerHTML = items.map(item => {
+                    const date = new Date(item.pubDate).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                    const initial = (item.title || '?').charAt(0);
+                    const thumbHtml = item.extractedThumb
+                        ? `<img src="${item.extractedThumb}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="onThumbError(this, '${initial}')">`
+                        : `<div class="w-full h-full flex items-center justify-center"><span class="text-2xl font-black text-white/60">${initial}</span></div>`;
+                    return `
+                        <a href="${item.link}" target="_blank" class="group flex gap-3 items-start p-1.5 rounded-lg hover:bg-white/20 transition-all border border-transparent hover:border-white/30 text-white">
+                            <div class="w-32 h-20 bg-white/20 rounded-md overflow-hidden flex-shrink-0 border border-white/20 shadow-md">
+                                ${thumbHtml}
+                            </div>
+                            <div class="flex-grow min-w-0 text-left text-white pt-0.5">
+                                <div class="text-[10px] font-black text-white/50 mb-1 tracking-widest uppercase">${date}</div>
+                                <h5 class="text-xs font-bold text-white line-clamp-3 leading-snug group-hover:text-tagen-orange transition-colors tracking-tight">${item.title}</h5>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            } else {
+                showRetryHero(containerId, rssUrl, titleId);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            applyConfig();
+            startSlideshow();
+            loadNewsListInHero(CONFIG.news.rssUrl, 'rss-feed-2', 'magazine-title-2');
+            loadSawaninGrid(CONFIG.members.rssUrl, 'rss-feed-1');
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            let current = '';
+            sections.forEach(section => {
+                if (pageYOffset >= section.offsetTop - 120) current = section.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('text-tagen-blue', 'text-slate-400');
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.add('text-tagen-blue');
+                }
+            });
+        });
+        // ===== CONFIGをDOMに適用 =====
+        function applyConfig() {
+            const C = CONFIG;
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+            // Hero テキスト
+            set('cfg-hero-badge',    C.hero.badge);
+            set('cfg-hero-h1-main',  C.hero.h1Main);
+            set('cfg-hero-h1-accent',C.hero.h1Accent);
+            set('cfg-hero-catch1',   C.hero.catch1);
+            set('cfg-hero-catch2',   C.hero.catch2);
+            set('cfg-news-title',    C.hero.newsTitle);
+
+            // Hero 背景スライド生成
+            const slidesEl = document.getElementById('hero-slides');
+            if (slidesEl) {
+                slidesEl.innerHTML = C.hero.images.map((url, i) =>
+                    `<div class="hero-slide${i===0?' active':''}" style="background-image:url('${url}')"></div>`
+                ).join('');
+            }
+
+            // TAGENとは
+            set('cfg-about-title',   C.about.sectionTitle);
+            set('cfg-about-sub',     C.about.sectionSubtitle);
+            set('cfg-purpose-head',  C.about.purposeHead);
+            set('cfg-purpose-lead',  C.about.purposeLead);
+            set('cfg-purpose-body',  C.about.purposeBody);
+            set('cfg-activities-head', C.about.activitiesHead);
+
+            // ボタン
+            const btn1 = document.querySelector('a[href="' + C.about.btn1Url + '"]');
+            const btn2 = document.querySelector('a[href="' + C.about.btn2Url + '"]');
+            [btn1, btn2].forEach((btn, idx) => {
+                if (!btn) return;
+                const textKey = idx === 0 ? 'btn1Text' : 'btn2Text';
+                for (const node of btn.childNodes) {
+                    if (node.nodeType === 3 && node.textContent.trim()) {
+                        node.textContent = C.about[textKey];
+                        break;
+                    }
+                }
+            });
+
+            // 活動内容 動的生成
+            const actGrid = document.getElementById('cfg-activities-grid');
+            if (actGrid) {
+                actGrid.innerHTML = C.about.activities.map((a, i) => {
+                    const col = a.color === 'blue' ? 'text-tagen-blue/30' : 'text-tagen-orange/30';
+                    return `<div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
+                            <span class="font-black ${col} text-4xl">${i+1}</span>
+                            <div>
+                                <h4 class="font-black mb-1.5 text-slate-900 text-base">${a.title}</h4>
+                                <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">${a.desc}</p>
+                            </div>
+                        </div>`;
+                }).join('');
+            }
+
+            // プロジェクト 動的生成
+            set('cfg-proj-title', C.projects.sectionTitle);
+            set('cfg-proj-sub',   C.projects.sectionSubtitle);
+            const projGrid = document.getElementById('cfg-projects-grid');
+            if (projGrid) {
+                projGrid.innerHTML = C.projects.items.map(p => {
+                    const hoverCol = p.accent === 'blue' ? 'group-hover:text-tagen-blue' : 'group-hover:text-tagen-orange';
+                    const gradCol  = p.accent === 'blue' ? 'from-tagen-blue/20' : 'from-tagen-orange/20';
+                    return `<a href="${p.url}" target="_blank" class="pop-card group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[30%]">
+                    <div class="aspect-video bg-slate-200 overflow-hidden relative">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" onerror="this.src='https://assets.st-note.com/production/static/images/common/ogp.png'">
+                        <div class="absolute inset-0 bg-gradient-to-t ${gradCol} to-transparent"></div>
+                    </div>
+                    <div class="p-10 text-left flex-grow">
+                        <h3 class="font-black mb-4 text-xl ${hoverCol} transition-colors">${p.name}</h3>
+                        <p class="text-xs font-medium text-slate-500 leading-relaxed text-justify">${p.desc}</p>
+                    </div>
+                </a>`;
+                }).join('');
+            }
+
+            // 世話人
+            set('cfg-mem-title', C.members.sectionTitle);
+            set('cfg-mem-sub',   C.members.sectionSubtitle);
+
+            // フッター
+            set('cfg-footer-name', C.footer.orgName);
+            set('cfg-footer-eng',  C.footer.orgNameEng);
+            const copyEl = document.getElementById('cfg-footer-copy');
+            if (copyEl) copyEl.innerHTML = '&copy; ' + C.footer.copyright;
+            const noteLink = document.querySelector('a[href="https://note.com/irn_tagen"]');
+            if (noteLink && noteLink.closest('footer')) noteLink.href = C.footer.noteUrl;
+            const mailLink = document.querySelector('a[href^="mailto:"]');
+            if (mailLink) { mailLink.href = 'mailto:' + C.footer.email; mailLink.lastChild.textContent = C.footer.email; }
+        }
+
+        // ===== ヒーロー背景スライドショー =====
+        function startSlideshow() {
+            const slides = Array.from(document.querySelectorAll('#hero-slides .hero-slide'));
+            if (slides.length < 2) return;
+            let current = 0;
+            setInterval(() => {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, CONFIG.hero.slideshowInterval);
+        }
+    </script>
+</body>
+</html>
