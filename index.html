@@ -115,100 +115,47 @@
 <body class="bg-white text-slate-800 leading-relaxed">
 
 <!-- ============================================================
-  ★ サイト設定・コンテンツ管理エリア
-     ここを書き換えるだけでサイト内容を更新できます
+  ★ サイト設定エリア（HEROイメージ・プロジェクト・RSS URL）
+     テキストラベルはHTML内に直接記載しています
   ============================================================ -->
 <script>
 const CONFIG = {
 
-  // ===== HERO =====
-  hero: {
-    badge:    'Independent Researchers Network',
-    h1Main:   '独立研究ネットワーク',
-    h1Accent: 'TAGEN',
-    catch1:   'みずから「学びのかたち」を企画する…',
-    catch2:   '境界を超えた先にある、新しい共働の「場」づくりへ',
-    newsTitle: '最新情報',
-    newsReadMoreUrl: 'https://note.com/irn_tagen/m/mcd3e98200fc3',
-    // ▼ 背景画像URL（増やすには配列に追加するだけ）
-    images: [
-      'https://assets.st-note.com/production/uploads/images/236726677/a2b31c2bac0881281e1c2465cea53509.jpeg',
-      'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
-    ],
-    slideshowInterval: 6000, // 切り替え間隔（ミリ秒）
-  },
+  // ===== HERO 背景画像（増やすには配列に追加するだけ） =====
+  heroImages: [
+    'https://assets.st-note.com/production/uploads/images/236726677/a2b31c2bac0881281e1c2465cea53509.jpeg',
+    'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
+  ],
+  heroSlideshowInterval: 6000, // 切り替え間隔（ミリ秒）
 
-  // ===== TAGENとは =====
-  about: {
-    sectionTitle:    'TAGENとは',
-    sectionSubtitle: '多元の知を探究する学びの企画集団',
-    purposeHead: '目的',
-    purposeLead: '独立研究ネットワークTAGENは、所属、経歴、年齢、国籍、研究領域を越え、誰もが知的探求を実践できる「場」を拓くことを目指す集まりです。',
-    purposeBody: '組織に属しているか否かにかかわらず、すべての「精神的に自立した探求者」が既存の境界を越えて出会い、みずから「学びのかたち」を企画する、能動的なプロセスを育むことを通して、豊かな研究文化の環境づくりに貢献することを目的としています。',
-    btn1Text: '「TAGEN」のコンセプト',
-    btn1Url:  'https://note.com/irn_tagen/n/n0123c8a712fa',
-    btn2Text: 'Official Note',
-    btn2Url:  'https://note.com/irn_tagen',
-    activitiesHead: '活動内容',
-    // ▼ 活動内容（増減可。color は "blue" または "orange"）
-    activities: [
-      { title: '知の交流と企画支援',        desc: '研究プロジェクト、勉強会、講演会、ワークショップの企画・運営',             color: 'blue'   },
-      { title: '在野の知の発掘と架橋',      desc: '既存の領域外で「知」を模索するプレイヤーとのネットワークづくり',         color: 'orange' },
-      { title: '動的な発信プラットフォーム', desc: '研究経過を発信し、成果を記録するためのメディア運営',                   color: 'blue'   },
-      { title: '自由のためのガイドライン',   desc: '研究活動における倫理的課題の解決に誠実に向き合うための指針づくり',       color: 'orange' },
-    ],
-  },
+  // ===== RSS URL =====
+  newsRssUrl:    'https://note.com/irn_tagen/m/mcd3e98200fc3/rss',
+  membersRssUrl: 'https://note.com/irn_tagen/m/m547633fbc335/rss',
 
-  // ===== プロジェクト（増減可） =====
-  projects: {
-    sectionTitle:    'TAGENのプロジェクト',
-    sectionSubtitle: 'みんなの「学びたい」を実現する場',
-    // ▼ プロジェクトを追加するには、このオブジェクトを配列に追加する
-    items: [
-      {
-        name:   '日韓酒文化研究会',
-        desc:   '酒を媒介とした日韓の文化交流を探究します。',
-        url:    'https://note.com/sakezemi',
-        img:    'https://assets.st-note.com/production/uploads/images/128432220/96e251bc4237f2a86987472e533649a5.jpeg',
-        accent: 'orange', // "orange" または "blue"
-      },
-      {
-        name:   'マージナルメディアの会',
-        desc:   '境界領域にあるメディア事象を抽出し検討します。',
-        url:    'https://note.com/mm_labo',
-        img:    'https://assets.st-note.com/production/uploads/images/244718926/09941bd4a09f601613d120dd4e42cb7e.jpg',
-        accent: 'blue',
-      },
-      {
-        name:   'RuRoゼミナール',
-        desc:   '現代の知のあり方を再編するゼミナールです。',
-        url:    'https://note.com/ruro_semi',
-        img:    'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
-        accent: 'orange',
-      },
-    ],
-  },
-
-  // ===== 世話人 =====
-  members: {
-    sectionTitle:    'TAGENの世話人',
-    sectionSubtitle: '学びの企画をなかだちするメディエイター',
-    rssUrl: 'https://note.com/irn_tagen/m/m547633fbc335/rss',
-  },
-
-  // ===== 最新情報 RSS =====
-  news: {
-    rssUrl: 'https://note.com/irn_tagen/m/mcd3e98200fc3/rss',
-  },
-
-  // ===== フッター =====
-  footer: {
-    orgName:    '独立研究ネットワークTAGEN',
-    orgNameEng: 'Independent Researchers Network',
-    noteUrl:    'https://note.com/irn_tagen',
-    email:      'info@tagen.media',
-    copyright:  '2026 Independent Researchers Network TAGEN.',
-  },
+  // ===== プロジェクト（増減可。追加はオブジェクトを配列に追加するだけ） =====
+  projects: [
+    {
+      name:   '日韓酒文化研究会',
+      desc:   '酒を媒介とした日韓の文化交流を探究します。',
+      url:    'https://note.com/sakezemi',
+      img:    'https://assets.st-note.com/production/uploads/images/128432220/96e251bc4237f2a86987472e533649a5.jpeg',
+      accent: 'orange', // "orange" または "blue"
+    },
+    {
+      name:   'マージナルメディアの会',
+      desc:   '境界領域にあるメディア事象を抽出し検討します。',
+      url:    'https://note.com/mm_labo',
+      img:    'https://assets.st-note.com/production/uploads/images/244718926/09941bd4a09f601613d120dd4e42cb7e.jpg',
+      accent: 'blue',
+    },
+    {
+      name:   'RuRoゼミナール',
+      desc:   '現代の知のあり方を再編するゼミナールです。',
+      url:    'https://note.com/ruro_semi',
+      img:    'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
+      accent: 'orange',
+    },
+  ],
 };
 </script>
 <!-- ============================================================
@@ -241,24 +188,24 @@ const CONFIG = {
         <!-- 背景スライド（CONFIG.hero.images で管理） -->
         <div id="hero-slides"><!-- JS render --></div>
         <div class="hero-overlay"></div>
-        <div class="max-w-7xl mx-auto px-4 w-full grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center">
+        <div class="max-w-7xl mx-auto px-4 w-full grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
             
             <!-- Left Side -->
-            <div class="lg:col-span-2 text-white text-left">
-                <div class="inline-block px-4 py-1.5 bg-tagen-orange/90 rounded-full text-[20px] font-black tracking-[0.2em] mb-6 uppercase shadow-lg" id="cfg-hero-badge">Independent Researchers Network</div>
+            <div class="lg:col-span-3 text-white text-left">
+                <div class="inline-block px-4 py-1.5 bg-tagen-orange/90 rounded-full text-[20px] font-black tracking-[0.2em] mb-6 uppercase shadow-lg">Independent Researchers Network</div>
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 leading-[1.1] drop-shadow-2xl">
-                    <span id="cfg-hero-h1-main">独立研究ネットワーク</span><br><span class="text-tagen-orange" id="cfg-hero-h1-accent">TAGEN</span>
+                    <span>独立研究ネットワーク</span><br><span class="text-tagen-orange">TAGEN</span>
                 </h1>
                 <p class="text-base md:text-xl lg:text-2xl font-bold leading-relaxed drop-shadow-md opacity-95 max-w-2xl text-white">
-                    <span id="cfg-hero-catch1">みずから「学びのかたち」を企画する…</span><br>
-                    <span class="mt-2 block text-white/90" id="cfg-hero-catch2">境界を超えた先にある、新しい共働の「場」づくりへ</span>
+                    <span>みずから「学びのかたち」を企画する…</span><br>
+                    <span class="mt-2 block text-white/90">境界を超えた先にある、新しい共働の「場」づくりへ</span>
                 </p>
             </div>
 
             <!-- Right Side: News -->
-            <div id="hero-news-area" class="lg:col-span-1 glass-panel p-4 md:p-5 rounded-2xl shadow-2xl relative overflow-hidden text-white">
+            <div id="hero-news-area" class="lg:col-span-2 glass-panel p-4 md:p-5 rounded-2xl shadow-2xl relative overflow-hidden text-white">
                 <div class="flex items-center justify-between mb-4 border-b border-white/20 pb-3 text-white">
-                    <h2 class="text-white text-xl font-black tracking-wider text-white" id="cfg-news-title">最新情報</h2>
+                    <h2 class="text-white text-xl font-black tracking-wider text-white">最新情報</h2>
                     <span class="text-[9px] text-white/50 font-black uppercase tracking-widest">Latest Updates</span>
                 </div>
                 <div id="rss-feed-2" class="space-y-1 text-white">
@@ -286,20 +233,20 @@ const CONFIG = {
     <section id="about" class="py-24 bg-white">
         <div class="max-w-6xl mx-auto px-4">
             <div class="section-title-group">
-                <h2 class="section-title" id="cfg-about-title">TAGENとは</h2>
-                <p class="section-subtitle" id="cfg-about-sub">多元の知を探究する学びの企画集団</p>
+                <h2 class="section-title">TAGENとは</h2>
+                <p class="section-subtitle">多元の知を探究する学びの企画集団</p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
                 <!-- Left: Purpose -->
                 <div>
-                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block" id="cfg-purpose-head">目的</h3>
+                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block">目的</h3>
                     <div class="space-y-8 text-slate-600 leading-relaxed font-medium">
                         <p class="text-xl md:text-2xl text-slate-900 font-bold border-l-8 border-tagen-orange pl-8 py-2 tracking-tight">
-                            <span id="cfg-purpose-lead">独立研究ネットワークTAGENは、所属、経歴、年齢、国籍、研究領域を越え、誰もが知的探求を実践できる「場」を拓くことを目指す集まりです。</span>
+                            <span>独立研究ネットワークTAGENは、所属、経歴、年齢、国籍、研究領域を越え、誰もが知的探求を実践できる「場」を拓くことを目指す集まりです。</span>
                         </p>
                         <p class="text-sm md:text-base text-justify opacity-80">
-                            <span id="cfg-purpose-body">組織に属しているか否かにかかわらず、すべての「精神的に自立した探求者」が既存の境界を越えて出会い、みずから「学びのかたち」を企画する、能動的なプロセスを育むことを通して、豊かな研究文化の環境づくりに貢献することを目的としています。</span>
+                            <span>組織に属しているか否かにかかわらず、すべての「精神的に自立した探求者」が既存の境界を越えて出会い、みずから「学びのかたち」を企画する、能動的なプロセスを育むことを通して、豊かな研究文化の環境づくりに貢献することを目的としています。</span>
                         </p>
                     </div>
                     
@@ -321,8 +268,29 @@ const CONFIG = {
 
                 <!-- Right: Activities -->
                 <div>
-                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block text-slate-900" id="cfg-activities-head">活動内容</h3>
-                    <div class="grid gap-4" id="cfg-activities-grid"><!-- JS render --></div>
+                    <h3 class="text-2xl font-black mb-10 leading-tight tracking-tighter text-slate-900 border-b-2 border-slate-100 pb-4 inline-block text-slate-900">活動内容</h3>
+                    <div class="grid gap-4">
+                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
+                            <span class="font-black text-tagen-blue/30 text-4xl">1</span>
+                            <div><h4 class="font-black mb-1.5 text-slate-900 text-base">知の交流と企画支援</h4>
+                            <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">研究プロジェクト、勉強会、講演会、ワークショップの企画・運営</p></div>
+                        </div>
+                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
+                            <span class="font-black text-tagen-orange/30 text-4xl">2</span>
+                            <div><h4 class="font-black mb-1.5 text-slate-900 text-base">在野の知の発掘と架橋</h4>
+                            <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">既存の領域外で「知」を模索するプレイヤーとのネットワークづくり</p></div>
+                        </div>
+                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
+                            <span class="font-black text-tagen-blue/30 text-4xl">3</span>
+                            <div><h4 class="font-black mb-1.5 text-slate-900 text-base">動的な発信プラットフォーム</h4>
+                            <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">研究経過を発信し、成果を記録するためのメディア運営</p></div>
+                        </div>
+                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
+                            <span class="font-black text-tagen-orange/30 text-4xl">4</span>
+                            <div><h4 class="font-black mb-1.5 text-slate-900 text-base">自由のためのガイドライン</h4>
+                            <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">研究活動における倫理的課題の解決に誠実に向き合うための指針づくり</p></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -332,8 +300,8 @@ const CONFIG = {
     <section id="groups" class="py-24 bg-slate-50 border-t border-slate-100 text-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="section-title-group text-slate-800">
-                <h2 class="section-title text-slate-800" id="cfg-proj-title">TAGENのプロジェクト</h2>
-                <p class="section-subtitle" id="cfg-proj-sub">みんなの「学びたい」を実現する場</p>
+                <h2 class="section-title text-slate-800">TAGENのプロジェクト</h2>
+                <p class="section-subtitle">みんなの「学びたい」を実現する場</p>
             </div>
             
             <div class="flex flex-wrap justify-center gap-10 text-slate-800" id="cfg-projects-grid"><!-- JS render --></div>
@@ -344,8 +312,8 @@ const CONFIG = {
     <section id="notes" class="py-24 bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-4">
             <div class="section-title-group">
-                <h2 class="section-title" id="cfg-mem-title">TAGENの世話人</h2>
-                <p class="section-subtitle" id="cfg-mem-sub">学びの企画をなかだちするメディエイター</p>
+                <h2 class="section-title">TAGENの世話人</h2>
+                <p class="section-subtitle">学びの企画をなかだちするメディエイター</p>
             </div>
             <div id="rss-feed-1" class="flex flex-wrap justify-center gap-6 md:gap-8">
                 <div class="animate-pulse bg-slate-50 h-52 w-36 md:w-44 rounded-[2rem] shadow-sm"></div>
@@ -365,8 +333,8 @@ const CONFIG = {
                         <img src="./tagen_icon.webp" alt="TAGEN icon" class="w-full h-full object-cover">
                     </div>
                     <div class="text-left">
-                        <span class="font-black text-white text-xl block mb-0.5 tracking-tight" id="cfg-footer-name">独立研究ネットワークTAGEN</span>
-                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-40 text-white" id="cfg-footer-eng">Independent Researchers Network</span>
+                        <span class="font-black text-white text-xl block mb-0.5 tracking-tight">独立研究ネットワークTAGEN</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-40 text-white">Independent Researchers Network</span>
                     </div>
                 </div>
                 <div class="flex justify-center items-center space-x-10 font-black text-xs tracking-[0.3em] uppercase text-white/40">
@@ -380,7 +348,7 @@ const CONFIG = {
                 </div>
             </div>
             <div class="pt-8 border-t border-white/5 text-center md:text-left text-[10px] font-bold tracking-widest opacity-20 uppercase text-white text-white">
-                <span id="cfg-footer-copy">&copy; 2026 Independent Researchers Network TAGEN.</span>
+                &copy; 2026 Independent Researchers Network TAGEN.
             </div>
         </div>
     </footer>
@@ -613,7 +581,7 @@ const CONFIG = {
                             </div>
                             <div class="flex-grow min-w-0 text-left text-white pt-0.5">
                                 <div class="text-[10px] font-black text-white/50 mb-1 tracking-widest uppercase">${date}</div>
-                                <h5 class="text-xs font-bold text-white line-clamp-3 leading-snug group-hover:text-tagen-orange transition-colors tracking-tight">${item.title}</h5>
+                                <h5 class="text-sm font-bold text-white line-clamp-3 leading-snug group-hover:text-tagen-orange transition-colors tracking-tight">${item.title}</h5>
                             </div>
                         </a>
                     `;
@@ -626,8 +594,8 @@ const CONFIG = {
         window.addEventListener('load', () => {
             applyConfig();
             startSlideshow();
-            loadNewsListInHero(CONFIG.news.rssUrl, 'rss-feed-2', 'magazine-title-2');
-            loadSawaninGrid(CONFIG.members.rssUrl, 'rss-feed-1');
+            loadNewsListInHero(CONFIG.newsRssUrl, 'rss-feed-2', 'magazine-title-2');
+            loadSawaninGrid(CONFIG.membersRssUrl, 'rss-feed-1');
         });
 
         window.addEventListener('scroll', () => {
@@ -646,68 +614,18 @@ const CONFIG = {
         });
         // ===== CONFIGをDOMに適用 =====
         function applyConfig() {
-            const C = CONFIG;
-            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-
-            // Hero テキスト
-            set('cfg-hero-badge',    C.hero.badge);
-            set('cfg-hero-h1-main',  C.hero.h1Main);
-            set('cfg-hero-h1-accent',C.hero.h1Accent);
-            set('cfg-hero-catch1',   C.hero.catch1);
-            set('cfg-hero-catch2',   C.hero.catch2);
-            set('cfg-news-title',    C.hero.newsTitle);
-
-            // Hero 背景スライド生成
+            // HEROスライド生成
             const slidesEl = document.getElementById('hero-slides');
             if (slidesEl) {
-                slidesEl.innerHTML = C.hero.images.map((url, i) =>
+                slidesEl.innerHTML = CONFIG.heroImages.map((url, i) =>
                     `<div class="hero-slide${i===0?' active':''}" style="background-image:url('${url}')"></div>`
                 ).join('');
             }
 
-            // TAGENとは
-            set('cfg-about-title',   C.about.sectionTitle);
-            set('cfg-about-sub',     C.about.sectionSubtitle);
-            set('cfg-purpose-head',  C.about.purposeHead);
-            set('cfg-purpose-lead',  C.about.purposeLead);
-            set('cfg-purpose-body',  C.about.purposeBody);
-            set('cfg-activities-head', C.about.activitiesHead);
-
-            // ボタン
-            const btn1 = document.querySelector('a[href="' + C.about.btn1Url + '"]');
-            const btn2 = document.querySelector('a[href="' + C.about.btn2Url + '"]');
-            [btn1, btn2].forEach((btn, idx) => {
-                if (!btn) return;
-                const textKey = idx === 0 ? 'btn1Text' : 'btn2Text';
-                for (const node of btn.childNodes) {
-                    if (node.nodeType === 3 && node.textContent.trim()) {
-                        node.textContent = C.about[textKey];
-                        break;
-                    }
-                }
-            });
-
-            // 活動内容 動的生成
-            const actGrid = document.getElementById('cfg-activities-grid');
-            if (actGrid) {
-                actGrid.innerHTML = C.about.activities.map((a, i) => {
-                    const col = a.color === 'blue' ? 'text-tagen-blue/30' : 'text-tagen-orange/30';
-                    return `<div class="p-5 bg-slate-50 border border-slate-100 rounded-xl flex gap-5">
-                            <span class="font-black ${col} text-4xl">${i+1}</span>
-                            <div>
-                                <h4 class="font-black mb-1.5 text-slate-900 text-base">${a.title}</h4>
-                                <p class="text-sm font-medium text-slate-500 leading-relaxed text-justify">${a.desc}</p>
-                            </div>
-                        </div>`;
-                }).join('');
-            }
-
-            // プロジェクト 動的生成
-            set('cfg-proj-title', C.projects.sectionTitle);
-            set('cfg-proj-sub',   C.projects.sectionSubtitle);
+            // プロジェクト動的生成
             const projGrid = document.getElementById('cfg-projects-grid');
             if (projGrid) {
-                projGrid.innerHTML = C.projects.items.map(p => {
+                projGrid.innerHTML = CONFIG.projects.map(p => {
                     const hoverCol = p.accent === 'blue' ? 'group-hover:text-tagen-blue' : 'group-hover:text-tagen-orange';
                     const gradCol  = p.accent === 'blue' ? 'from-tagen-blue/20' : 'from-tagen-orange/20';
                     return `<a href="${p.url}" target="_blank" class="pop-card group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[30%]">
@@ -722,20 +640,6 @@ const CONFIG = {
                 </a>`;
                 }).join('');
             }
-
-            // 世話人
-            set('cfg-mem-title', C.members.sectionTitle);
-            set('cfg-mem-sub',   C.members.sectionSubtitle);
-
-            // フッター
-            set('cfg-footer-name', C.footer.orgName);
-            set('cfg-footer-eng',  C.footer.orgNameEng);
-            const copyEl = document.getElementById('cfg-footer-copy');
-            if (copyEl) copyEl.innerHTML = '&copy; ' + C.footer.copyright;
-            const noteLink = document.querySelector('a[href="https://note.com/irn_tagen"]');
-            if (noteLink && noteLink.closest('footer')) noteLink.href = C.footer.noteUrl;
-            const mailLink = document.querySelector('a[href^="mailto:"]');
-            if (mailLink) { mailLink.href = 'mailto:' + C.footer.email; mailLink.lastChild.textContent = C.footer.email; }
         }
 
         // ===== ヒーロー背景スライドショー =====
@@ -747,7 +651,7 @@ const CONFIG = {
                 slides[current].classList.remove('active');
                 current = (current + 1) % slides.length;
                 slides[current].classList.add('active');
-            }, CONFIG.hero.slideshowInterval);
+            }, CONFIG.heroSlideshowInterval);
         }
     </script>
 </body>
