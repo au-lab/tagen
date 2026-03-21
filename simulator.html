@@ -88,7 +88,7 @@ iframe{border:none;background:#fff;transform-origin:top left;display:block}
       <span>プレビュー</span>
       <div class="zm">
         <button class="zbtn" onclick="zoom(-10)">－</button>
-        <span class="zl" id="zl">70%</span>
+        <span class="zl" id="zl">100%</span>
         <button class="zbtn" onclick="zoom(+10)">＋</button>
       </div>
     </div>
@@ -112,7 +112,7 @@ FIELDS.forEach(([id, val]) => {
 });
 
 const changes = {};
-let zl = 70, timer = null;
+let zl = 100, timer = null;
 
 function buildHTML(){
   let html = ORIG;
