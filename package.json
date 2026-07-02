@@ -1,0 +1,13 @@
+{
+  "name": "tagen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "独立研究ネットワークTAGEN 静的サイト",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./css/style.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./css/style.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0"
+  }
+}
