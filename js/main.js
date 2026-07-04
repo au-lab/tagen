@@ -150,7 +150,7 @@ function gridCard(item) {
     return `<a href="${item.link}" target="_blank" class="cursor-pointer transition-all duration-400 ease-in-out hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col h-full w-40 md:w-48 text-center text-slate-800">
         <div class="aspect-4/3 overflow-hidden bg-slate-100 relative">${thumb}<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
         <div class="p-5 grow flex items-center justify-center text-slate-800">
-            <h5 class="text-sm text-slate-800 line-clamp-3 group-hover:text-slate-700 transition-colors leading-snug">${title}</h5>
+            <h5 class="text-slate-800 line-clamp-3 group-hover:text-slate-700 transition-colors leading-snug">${title}</h5>
         </div></a>`;
 }
 
