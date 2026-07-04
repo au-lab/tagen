@@ -59,6 +59,12 @@ body {
     color: #1e293b;
 }
 
+/* 見出し内の「TAGEN」ロゴタイプ */
+.font-tagen {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+}
+
 .section-title::after {
     content: '';
     position: absolute;
