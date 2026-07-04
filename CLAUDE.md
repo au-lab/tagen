@@ -2,12 +2,21 @@
 
 Static website for **独立研究ネットワークTAGEN** (Independent Researchers Network TAGEN), hosted on GitHub Pages at `https://au-lab.github.io/tagen/`.
 
-No build system. Open `index.html` directly in a browser to preview. Tailwind is loaded via CDN.
+Tailwind CSS v4 is compiled locally via `@tailwindcss/cli` (no CDN). Open `index.html` directly in a browser to preview; rebuild the CSS after changing markup classes or `src/input.css`.
+
+## Build
+
+- `npm install` — install `@tailwindcss/cli` (dev dependency; `node_modules/` is gitignored)
+- `npm run build:css` — one-off minified build: `src/input.css` → `css/style.css`
+- `npm run watch:css` — rebuild on change while developing
+
+`src/input.css` imports Tailwind and holds the hand-written styles (hero slideshow, `.section-title`); it `@source`s `index.html` and `js/**/*.js` so classes added dynamically in JS are detected. `css/style.css` is the generated output that `index.html` loads — don't edit it by hand.
 
 ## Files
 
 - **[index.html](index.html)** — markup only (structure + Tailwind classes)
-- **[css/style.css](css/style.css)** — hero slideshow + `.section-title` styles
+- **[src/input.css](src/input.css)** — Tailwind entry + hero slideshow / `.section-title` styles (edit this)
+- **[css/style.css](css/style.css)** — generated Tailwind output (do not edit)
 - **[js/config.js](js/config.js)** — `CONFIG` object: `heroImages`, `heroSlideshowInterval`, `newsRssUrl` / `membersRssUrl`, `projects[]`. Edit this to change site content.
 - **[js/main.js](js/main.js)** — RSS fetching/rendering, config injection, slideshow
 

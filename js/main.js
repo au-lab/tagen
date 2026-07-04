@@ -147,10 +147,10 @@ function gridCard(item) {
         fallbackWrap: 'w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200',
         fallbackText: 'text-2xl font-bold text-slate-400',
     });
-    return `<a href="${item.link}" target="_blank" class="transition-all duration-[400ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col h-full w-40 md:w-48 text-center text-slate-800">
-        <div class="aspect-[4/3] overflow-hidden bg-slate-100 relative">${thumb}<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
-        <div class="p-5 flex-grow flex items-center justify-center text-slate-800">
-            <h5 class="text-[11px] font-bold text-slate-800 line-clamp-3 group-hover:text-slate-700 transition-colors leading-snug">${item.title}</h5>
+    return `<a href="${item.link}" target="_blank" class="cursor-pointer transition-all duration-400 ease-in-out hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col h-full w-40 md:w-48 text-center text-slate-800">
+        <div class="aspect-4/3 overflow-hidden bg-slate-100 relative">${thumb}<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+        <div class="p-5 grow flex items-center justify-center text-slate-800">
+            <h5 class="text-sm text-slate-800 line-clamp-3 group-hover:text-slate-700 transition-colors leading-snug">${item.title}</h5>
         </div></a>`;
 }
 
@@ -163,9 +163,9 @@ function heroItem(item) {
         fallbackText: 'text-2xl font-bold text-white/60',
     });
     return `<a href="${item.link}" target="_blank" class="group flex gap-3 items-start p-1.5 rounded-lg hover:bg-white/20 transition-all border border-transparent hover:border-white/30 text-white">
-        <div class="w-32 h-20 bg-white/20 rounded-md overflow-hidden flex-shrink-0 border border-white/20 shadow-md">${thumb}</div>
-        <div class="flex-grow min-w-0 text-left text-white pt-0.5">
-            <div class="text-[10px] font-bold text-white/50 mb-1 tracking-widest uppercase">${date}</div>
+        <div class="w-32 h-20 bg-white/20 rounded-md overflow-hidden shrink-0 border border-white/20 shadow-md">${thumb}</div>
+        <div class="grow min-w-0 text-left text-white pt-0.5">
+            <div class="text-xs font-bold text-white/50 mb-1 tracking-widest uppercase">${date}</div>
             <h5 class="text-sm font-bold text-white line-clamp-3 leading-snug group-hover:text-orange-500 transition-colors">${item.title}</h5>
         </div></a>`;
 }
@@ -196,12 +196,12 @@ function applyConfig() {
         projGrid.innerHTML = CONFIG.projects.map(p => {
             const hoverCol = p.accent === 'blue' ? 'group-hover:text-slate-700' : 'group-hover:text-orange-500';
             const gradCol = p.accent === 'blue' ? 'from-slate-500/20' : 'from-orange-500/20';
-            return `<a href="${p.url}" target="_blank" class="transition-all duration-[400ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[30%]">
+            return `<a href="${p.url}" target="_blank" class="cursor-pointer transition-all duration-400 ease-in-out hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[30%]">
                 <div class="aspect-video bg-slate-200 overflow-hidden relative">
                     <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" onerror="onThumbError(this,'${(p.name || '?').charAt(0)}')">
-                    <div class="absolute inset-0 bg-gradient-to-t ${gradCol} to-transparent"></div>
+                    <div class="absolute inset-0 bg-linear-to-t ${gradCol} to-transparent"></div>
                 </div>
-                <div class="p-10 text-left flex-grow">
+                <div class="p-10 text-left grow">
                     <h3 class="font-bold mb-4 text-xl ${hoverCol} transition-colors">${p.name}</h3>
                     <p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p>
                 </div></a>`;
