@@ -8,6 +8,7 @@ const CONFIG = {
         'https://assets.st-note.com/production/uploads/images/248287669/rectangle_large_type_2_339ae3720590bec340efe0a87147b7cb.jpeg',
     ],
     heroSlideshowInterval: 6000,
+    corsProxy: 'https://cors-proxy.sugi2000.workers.dev/',
     newsRssUrl: 'https://note.com/irn_tagen/m/mcd3e98200fc3/rss',
     membersRssUrl: 'https://note.com/irn_tagen/m/m547633fbc335/rss',
     projects: [

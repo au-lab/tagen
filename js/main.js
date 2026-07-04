@@ -43,10 +43,9 @@ async function fetchRSS(rssUrl, onProgress) {
     for (let i = 0; i < MAX_RETRY; i++) {
         if (onProgress) onProgress(i + 1, MAX_RETRY);
         try {
-            const res = await fetchWithTimeout(`https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`);
+            const res = await fetchWithTimeout(`${CONFIG.corsProxy}${rssUrl}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const json = await res.json();
-            const result = parseXML(json.contents);
+            const result = parseXML(await res.text());
             if (result) return result;
             throw new Error('parse failed');
         } catch (e) {
