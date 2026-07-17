@@ -32,7 +32,7 @@ const CONFIG = {
         },
         {
             name: 'AI問いなおしラボ',
-            desc: 'これからのAIを批判的・実践的に問いなおすリテラシーについて考えます',
+            desc: 'これからのAIを批判的・実践的に問いなおすリテラシーを考えます。',
             url: 'https://note.com/req_ai_labo',
             img: 'https://assets.st-note.com/production/uploads/images/295112590/52d55524b9b70ff9c12ddcabebcf39a4.png?width=1920&quality=90',
         },
