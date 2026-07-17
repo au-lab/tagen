@@ -194,13 +194,13 @@ function applyConfig() {
     const projGrid = document.getElementById('cfg-projects-grid');
     if (projGrid) {
         projGrid.innerHTML = CONFIG.projects.map(p => {
-            return `<a href="${p.url}" target="_blank" class="cursor-pointer transition-all duration-400 ease-in-out hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[30%]">
+            return `<a href="${p.url}" target="_blank" class="cursor-pointer transition-all duration-400 ease-in-out hover:-translate-y-2.5 hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 flex flex-col text-slate-800 w-full md:w-[47%] lg:w-[22%]">
                 <div class="aspect-video bg-slate-200 overflow-hidden relative">
                     <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100" onerror="onThumbError(this,'${(p.name || '?').charAt(0)}')">
                     <div class="absolute inset-0 bg-linear-to-t 'from-slate-500/20' to-transparent"></div>
                 </div>
-                <div class="p-10 text-left grow">
-                    <h3 class="font-bold mb-4 text-xl group-hover:text-slate-700 transition-colors">${p.name}</h3>
+                <div class="p-6 text-left grow">
+                    <h3 class="font-bold mb-2 text-xl group-hover:text-slate-700 transition-colors">${p.name}</h3>
                     <p class="text-sm text-slate-500 leading-relaxed text-justify">${p.desc}</p>
                 </div></a>`;
         }).join('');
