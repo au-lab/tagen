@@ -20,7 +20,7 @@ const CONFIG = {
         },
         {
             name: 'マージナルメディアの会',
-            desc: '境界領域にあるメディア事象を抽出し検討します。',
+            desc: 'モノ・ヒト・コトの境界から日常に潜むメディアの在り様を探ります。',
             url: 'https://note.com/mm_labo',
             img: 'https://assets.st-note.com/production/uploads/images/244718926/09941bd4a09f601613d120dd4e42cb7e.jpg',
         },
