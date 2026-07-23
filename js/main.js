@@ -222,7 +222,7 @@ window.addEventListener('load', () => {
     applyConfig();
     startSlideshow();
     loadFeed({ containerId: 'rss-feed-2', rssUrl: CONFIG.newsRssUrl, theme: THEMES.hero, full: false, limit: 4, renderItem: heroItem });
-    loadFeed({ containerId: 'rss-feed-1', rssUrl: CONFIG.membersRssUrl, theme: THEMES.grid, full: true, limit: 15, renderItem: gridCard });
+    loadFeed({ containerId: 'rss-feed-1', rssUrl: CONFIG.membersRssUrl, theme: THEMES.grid, full: true, renderItem: gridCard });
 });
 
 window.addEventListener('scroll', () => {
